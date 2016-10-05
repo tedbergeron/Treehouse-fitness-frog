@@ -41,10 +41,10 @@ namespace Treehouse.FitnessFrog.Controllers
 
         public ActionResult Add()
         {
-            var entry = new Entry();
+            var entry = new Entry()
             {
-                entry.Date = DateTime.Today;
-            }
+                Date = DateTime.Today
+            };
 
 
             return View(entry);
@@ -57,7 +57,7 @@ namespace Treehouse.FitnessFrog.Controllers
             {
                 _entriesRepository.AddEntry(entry);
 
-                // TODO Display the Entries list page.
+                return RedirectToAction("Index");
 
             }
 
