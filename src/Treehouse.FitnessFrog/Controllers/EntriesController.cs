@@ -120,6 +120,8 @@ namespace Treehouse.FitnessFrog.Controllers
             return View(entry);
         }
 
+        // Get request should always be safe to make
+        // return a view to allow user to review before deleting
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -127,8 +129,30 @@ namespace Treehouse.FitnessFrog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View();
+            // Retrieve entry for the provided if parameter value
+            Entry entry = _entriesRepository.GetEntry((int)id);
+
+            // Return 'not found' if entry not found
+            if (entry == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Pass the entry to the view
+            return View(entry);
         }
+
+
+        [HttpPost]
+        public ActionResult Delete (int id)
+        {
+            // Delete the entry
+            _entriesRepository.DeleteEntry(id);
+
+            // Redirect to the entries list page
+            return RedirectToAction("Index");
+        }
+
 
         // Server-side validation
         private void ValidateEntry(Entry entry)
