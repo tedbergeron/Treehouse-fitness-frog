@@ -7,10 +7,12 @@
 
 <h2>@ViewBag.Title</h2>
 
-@Html.ValidationSummary("The following errors were found:", new { @class = "alert alert-danger" })
 
 @using (Html.BeginForm())
 {
+    // must be inside form for jQuery ClientValidationEnabled to work
+    @Html.ValidationSummary("The following errors were found:", new { @class = "alert alert-danger" })
+
     <div class="row">
 
         <div class="col-md-6">
